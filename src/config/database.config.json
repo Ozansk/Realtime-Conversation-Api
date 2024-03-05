@@ -1,0 +1,14 @@
+{
+    "HOSTNAME": "localhost",
+    "PORT": "5432",
+    "USERNAME": "postgres",
+    "PASSWORD": "postgres",
+    "SCHEMA": "nestjsProject",
+    "OPTIONS": {
+        "LOGGING": false,
+        "BENCHMARK": false,
+        "MAX_CONNECTION": 100,
+        "MIN_CONNECTION": 3,
+        "IDLE_TIME": 5000
+    }
+}

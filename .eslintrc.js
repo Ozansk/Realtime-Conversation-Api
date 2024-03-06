@@ -17,7 +17,7 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: [".eslintrc.cjs", "vite.config.ts", "src"],
+  ignorePatterns: [".eslintrc.cjs", "vite.config.ts"],
   rules: {
     'no-var': 'error',
     semi: 'error',

@@ -9,7 +9,7 @@
     "target": "ES2016",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -21,7 +21,8 @@
     "esModuleInterop": true,
     "strictPropertyInitialization": false,
     "paths": {
-      "@config/*": ["src/config/*"]
+      "@config/*": ["config/*"],
+      "@helpers": ["helpers"],
     }
   }
 }

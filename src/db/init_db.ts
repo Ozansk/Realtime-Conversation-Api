@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import { QueryOptions } from 'sequelize/lib/dialects/abstract/query-interface';
 import { SyncOptions } from 'sequelize/lib/sequelize';
-import { User } from './src/users/user.entity';
+import { User } from '../users/user.entity';
 
 export class Postgres {
     private static DB: Sequelize;
@@ -36,7 +36,7 @@ export class Postgres {
             },
             logging: this.config.OPTIONS.LOGGING || false,
             benchmark: this.config.OPTIONS.BENCHMARK || false,
-            models: [User],
+            models: [__dirname + '/../**/*.entity.ts'],
             modelMatch: (filename, member) => {
                 return filename.substring(0, filename.indexOf('.entity')).toLowerCase() === member.toLowerCase();
             },
@@ -67,7 +67,7 @@ export class Postgres {
         switch (this.domain) {
             case 'nestjsProject':
                 Postgres.entities = {
-                    User: Postgres.DB.getRepository(User)
+                    users: Postgres.DB.getRepository(User)
                 };
                 break;
         }

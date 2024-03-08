@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
@@ -11,7 +11,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
     imports: [
-        UsersModule,
+        forwardRef(() => UsersModule),
         CacheModule.register<RedisClientOptions>({
             store: redisStore,
             host: redisConfig.host,
@@ -24,6 +24,7 @@ import { CacheModule } from '@nestjs/cache-manager';
         })
     ],
     providers: [AuthService],
-    controllers: [AuthController]
+    controllers: [AuthController],
+    exports: [AuthService]
 })
 export class AuthModule {}

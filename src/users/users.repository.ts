@@ -5,7 +5,7 @@ import { User as UserModel } from './user.model';
 export class UsersRepository {
     constructor(
         @InjectModel(User)
-        private usersEntity: typeof User
+        private readonly usersEntity: typeof User
     ) {}
 
     getAllUsers = async () => this.usersEntity.findAll();
@@ -18,6 +18,13 @@ export class UsersRepository {
                 userName,
                 deletedAt: null,
                 isActive: true
+            }
+        });
+
+    findUserByUserNumber = async (userNumber: string) =>
+        this.usersEntity.findOne({
+            where: {
+                userNumber
             }
         });
 }

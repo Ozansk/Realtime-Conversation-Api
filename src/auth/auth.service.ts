@@ -59,4 +59,29 @@ export class AuthService {
         this.jwtService.sign(data, {
             expiresIn: baseConfig.JWT_EXPIRE_TIME
         });
+
+    verifyJwtAndCheckSessionFromRedis = async (token: string) => {
+        const verifyResult = this.jwtService.verify<UserPayload>(token);
+        if (!verifyResult) {
+            throw new Error('Token is not verify!');
+        }
+        const userTokenFromRedis = await this.getTokenFromRedis(verifyResult.userNumber);
+        if (userTokenFromRedis !== token) {
+            throw new Error('Not current session!');
+        }
+        return verifyResult;
+    };
+
+    getAndSetUserData = async (userNumber: string): Promise<any> => {
+        const userData = await this.cacheManager.get(`authentication:${userNumber}:data`);
+        if (userData) {
+            return userData;
+        }
+        const userInfo = await this.usersRepository.findUserByUserNumber(userNumber);
+        if (!userInfo) {
+            throw new Error('User info not found!');
+        }
+        await this.cacheManager.set(`authentication:${userNumber}:data`, userInfo, 3600);
+        return userInfo;
+    };
 }

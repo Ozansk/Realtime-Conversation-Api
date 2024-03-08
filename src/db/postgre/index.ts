@@ -1,13 +1,14 @@
 import { Sequelize } from 'sequelize-typescript';
 import { QueryOptions } from 'sequelize/lib/dialects/abstract/query-interface';
 import { SyncOptions } from 'sequelize/lib/sequelize';
-import { User } from '../users/user.entity';
+import { User } from './entities';
 
 export class Postgres {
     private static DB: Sequelize;
     private config;
     public static entities;
     private domain;
+    private sequelizeModel;
 
     static getTransaction = () => Postgres.DB.transaction();
     static rawQuery = (query: string, options?: QueryOptions) => Postgres.DB.query(query, options);
@@ -22,8 +23,8 @@ export class Postgres {
         return this;
     }
 
-    private createDB = () =>
-        new Sequelize({
+    setSequelizeModel() {
+        this.sequelizeModel = {
             host: this.config.HOSTNAME,
             username: this.config.USERNAME,
             password: this.config.PASSWORD,
@@ -36,7 +37,7 @@ export class Postgres {
             },
             logging: this.config.OPTIONS.LOGGING || false,
             benchmark: this.config.OPTIONS.BENCHMARK || false,
-            models: [__dirname + '/../**/*.entity.ts'],
+            models: this.getModels(),
             modelMatch: (filename, member) => {
                 return filename.substring(0, filename.indexOf('.entity')).toLowerCase() === member.toLowerCase();
             },
@@ -45,7 +46,15 @@ export class Postgres {
                 decimalNumbers: true
             },
             timezone: 'Europe/Istanbul'
-        });
+        };
+        return this;
+    }
+
+    getSequelizeModel() {
+        return this.sequelizeModel;
+    }
+
+    private createDB = () => new Sequelize(this.sequelizeModel);
 
     async initializeDB(sync?: boolean, syncOptions?: SyncOptions) {
         Postgres.DB = this.createDB();
@@ -66,38 +75,21 @@ export class Postgres {
     private setEntities() {
         switch (this.domain) {
             case 'nestjsProject':
-                Postgres.entities = {
-                    users: Postgres.DB.getRepository(User)
-                };
+            case 'test':
+                this.getRepositories();
                 break;
         }
     }
+
+    private getRepositories() {
+        Postgres.entities = {
+            users: Postgres.DB.getRepository(User)
+        };
+    }
+
+    private getModels() {
+        return [User];
+    }
 }
 
-(async () => {
-    console.log('DB Sync STARTING');
-    try {
-        await new Postgres()
-            .setDomain('nestjsProject')
-            .setConfig({
-                HOSTNAME: '127.0.0.1',
-                PORT: 5432,
-                USERNAME: 'postgres',
-                PASSWORD: 'postgres',
-                SCHEMA: 'nestjsProject',
-                OPTIONS: {
-                    LOGGING: false,
-                    BENCHMARK: false,
-                    MAX_CONNECTION: 100,
-                    MIN_CONNECTION: 3,
-                    IDLE_TIME: 5000
-                }
-            })
-            .initializeDB(true, { logging: true });
-        console.log('DB Sync COMPLETED');
-        process.exit(0);
-    } catch (e) {
-        console.log('DB Sync FAILED: ', e);
-        process.exit(0);
-    }
-})();
+export default Postgres;

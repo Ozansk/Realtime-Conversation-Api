@@ -13,6 +13,8 @@ export class MyGateway implements OnModuleInit {
             console.log('Socket connected!');
         });
     }
+
+    // this part created for the testing
     @SubscribeMessage('newMessage')
     onNewMessage(@MessageBody() body: any) {
         console.log(body);

@@ -9,10 +9,18 @@ import {
     AllowNull,
     Default,
     BeforeCreate,
-    BeforeUpdate
+    BeforeUpdate,
+    HasMany,
+    Scopes
 } from 'sequelize-typescript';
 import { common as commonHelper, date as dateHelper } from '../helpers';
+import { Message } from '../messages/message.entity';
 
+@Scopes({
+    defaultScope: {
+        attributes: { exclude: ['password'] }
+    }
+})
 @Table({
     tableName: 'Users',
     createdAt: 'createdAt',
@@ -76,4 +84,9 @@ export class User extends Model {
     public async comparePasswords(candidatePassword: string, hashedPassword: string) {
         return commonHelper.checkHash(candidatePassword, hashedPassword);
     }
+
+    @HasMany(() => Message, {
+        sourceKey: 'userNumber'
+    })
+    messages?: Array<Message>;
 }

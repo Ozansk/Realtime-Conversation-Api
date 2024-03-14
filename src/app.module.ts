@@ -5,12 +5,14 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import postgreConfig from '@config/database.config.json';
 import Postgres from './db/postgre';
 import { GatewayModule } from './gateway/gateway.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
     imports: [
         UsersModule,
         AuthModule,
         GatewayModule,
+        MessagesModule,
         SequelizeModule.forRoot(new Postgres().setConfig(postgreConfig).setSequelizeModel().getSequelizeModel())
     ]
 })

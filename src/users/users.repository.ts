@@ -13,7 +13,7 @@ export class UsersRepository {
     createUser = async (userData: UserModel) => this.usersEntity.create({ ...userData });
 
     findUserByUserName = async (userName: string) =>
-        this.usersEntity.findOne({
+        this.usersEntity.unscoped().findOne({
             where: {
                 userName,
                 deletedAt: null,

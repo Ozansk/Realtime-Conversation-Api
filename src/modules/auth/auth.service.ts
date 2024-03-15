@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { UsersRepository } from 'users/users.repository';
+import { UsersRepository } from '../users/users.repository';
 import { LoginDto } from './dto';
 import { JwtService } from '@nestjs/jwt';
-import baseConfig from '../baseConfig';
+import baseConfig from '../../baseConfig';
 import { Cache } from 'cache-manager';
 interface UserPayload {
     userNumber: string;

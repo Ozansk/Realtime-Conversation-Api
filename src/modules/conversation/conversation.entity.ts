@@ -11,7 +11,7 @@ import {
     BelongsTo,
     ForeignKey
 } from 'sequelize-typescript';
-import { date as dateHelper } from '../helpers';
+import { date as dateHelper } from '../../helpers';
 import { User } from '../users/user.entity';
 
 @Table({

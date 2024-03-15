@@ -1,7 +1,7 @@
-import { Controller, Req, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Controller, Req, Post, Put, Query, UseGuards, Body } from '@nestjs/common';
 import { ConversationService } from './conversation.service';
 import { Request } from 'express';
-import { CloseConversationDto } from './dto';
+import { CloseConversationDto, CreateConversationDto } from './dto';
 import { AuthGuard } from '../auth/auth.guard';
 
 @UseGuards(AuthGuard)
@@ -10,8 +10,11 @@ export class ConversationController {
     constructor(private conversationService: ConversationService) {}
 
     @Post()
-    async createConversation(@Req() req: Request) {
-        const conversationData = await this.conversationService.createConversation(req?.user?.userNumber);
+    async createConversation(@Body() createConversationDto: CreateConversationDto, @Req() req: Request) {
+        const conversationData = await this.conversationService.createConversation(
+            createConversationDto,
+            req?.user?.userNumber
+        );
         return {
             conversationNumber: conversationData.conversationNumber
         };

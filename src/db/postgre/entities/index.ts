@@ -1,3 +1,3 @@
-export { User } from '../../../users/user.entity';
-export { Message } from '../../../messages/message.entity';
-export { Conversation } from '../../../conversation/conversation.entity';
+export { User } from '../../../modules/users/user.entity';
+export { Message } from '../../../modules/messages/message.entity';
+export { Conversation } from '../../../modules/conversation/conversation.entity';

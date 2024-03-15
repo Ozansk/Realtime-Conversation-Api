@@ -15,6 +15,7 @@ import {
 } from 'sequelize-typescript';
 import { common as commonHelper, date as dateHelper } from '../helpers';
 import { Message } from '../messages/message.entity';
+import { Conversation } from '../conversation/conversation.entity';
 
 @Scopes({
     defaultScope: {
@@ -89,4 +90,9 @@ export class User extends Model {
         sourceKey: 'userNumber'
     })
     messages?: Array<Message>;
+
+    @HasMany(() => Conversation, {
+        sourceKey: 'userNumber'
+    })
+    conversationList?: Array<Conversation>;
 }

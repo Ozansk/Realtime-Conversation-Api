@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MessagesController } from './messages.controller';
 import { MessagesService } from './messages.service';
 import { MessagesRepository } from './messages.repository';
-import { AuthModule } from 'auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Message } from './message.entity';
 

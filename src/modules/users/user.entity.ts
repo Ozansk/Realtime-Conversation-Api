@@ -13,7 +13,7 @@ import {
     HasMany,
     Scopes
 } from 'sequelize-typescript';
-import { common as commonHelper, date as dateHelper } from '../helpers';
+import { common as commonHelper, date as dateHelper } from '../../helpers';
 import { Message } from '../messages/message.entity';
 import { Conversation } from '../conversation/conversation.entity';
 

@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import { QueryOptions } from 'sequelize/lib/dialects/abstract/query-interface';
 import { SyncOptions } from 'sequelize/lib/sequelize';
-import { User } from './entities';
+import { User, Message, Conversation } from './entities';
 
 export class Postgres {
     private static DB: Sequelize;
@@ -83,12 +83,14 @@ export class Postgres {
 
     private getRepositories() {
         Postgres.entities = {
-            users: Postgres.DB.getRepository(User)
+            users: Postgres.DB.getRepository(User),
+            messages: Postgres.DB.getRepository(Message),
+            conversation: Postgres.DB.getRepository(Conversation)
         };
     }
 
     private getModels() {
-        return [User];
+        return [User, Message, Conversation];
     }
 }
 

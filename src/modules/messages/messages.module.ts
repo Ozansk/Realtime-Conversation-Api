@@ -5,9 +5,10 @@ import { MessagesRepository } from './messages.repository';
 import { AuthModule } from '../auth/auth.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Message } from './message.entity';
+import { GatewayModule } from '../gateway/gateway.module';
 
 @Module({
-    imports: [AuthModule, SequelizeModule.forFeature([Message])],
+    imports: [AuthModule, GatewayModule, SequelizeModule.forFeature([Message])],
     controllers: [MessagesController],
     providers: [MessagesService, MessagesRepository]
 })

@@ -28,4 +28,7 @@ export class ConversationService {
 
     closeConversation = async (conversationNumber: string) =>
         this.conversationRepository.closeConversation(conversationNumber);
+
+    getConversationByNumber = async (conversationNumber: string) =>
+        this.conversationRepository.getConversationByNumber(conversationNumber);
 }

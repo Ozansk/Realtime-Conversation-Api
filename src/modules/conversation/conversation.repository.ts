@@ -22,4 +22,11 @@ export class ConversationRepository {
                 }
             }
         );
+
+    getConversationByNumber = async (conversationNumber: string) =>
+        this.conversationEntity.findOne({
+            where: {
+                conversationNumber
+            }
+        });
 }

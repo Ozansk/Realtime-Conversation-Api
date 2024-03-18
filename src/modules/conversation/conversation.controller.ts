@@ -3,6 +3,7 @@ import { ConversationService } from './conversation.service';
 import { Request } from 'express';
 import { CloseConversationDto, CreateConversationDto } from './dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { ConversationGuard } from './conversation.guard';
 
 @UseGuards(AuthGuard)
 @Controller('conversation')
@@ -20,6 +21,7 @@ export class ConversationController {
         };
     }
 
+    @UseGuards(ConversationGuard)
     @Put('close')
     async closeConversation(@Query() closeConversationDto: CloseConversationDto) {
         await this.conversationService.closeConversation(closeConversationDto.conversationNumber);

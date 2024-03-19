@@ -75,7 +75,7 @@ export class Postgres {
     private setEntities() {
         switch (this.domain) {
             case 'nestjsProject':
-            case 'test':
+            case 'realtime-conversation-api-test':
                 this.getRepositories();
                 break;
         }

@@ -1,0 +1,14 @@
+{
+    "HOSTNAME": "127.0.0.1",
+    "PORT": "5432",
+    "USERNAME": "postgres",
+    "PASSWORD": "postgres",
+    "SCHEMA": "realtime-conversation-api-test",
+    "OPTIONS": {
+        "LOGGING": false,
+        "BENCHMARK": false,
+        "MAX_CONNECTION": 100,
+        "MIN_CONNECTION": 3,
+        "IDLE_TIME": 5000
+    }
+}

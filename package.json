@@ -18,6 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:github": "jest --forceExit --config ./test/jest-e2e.json",
     "test:local": "npx ts-node src/db/test/init_test_db.ts && npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all && jest --detectOpenHandles --forceExit --config ./test/jest-e2e.json"
   },
   "dependencies": {

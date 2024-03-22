@@ -86,7 +86,7 @@ describe('Conversation Controller Testing', () => {
                 .post('/conversation/close')
                 .set('Authorization', invalidUserToken)
                 .query(closeConversationData)
-                .expect(HttpStatus.FORBIDDEN);
+                .expect(HttpStatus.NOT_FOUND);
         });
 
         it('should return 404 close conversation by invalid token', async () => {

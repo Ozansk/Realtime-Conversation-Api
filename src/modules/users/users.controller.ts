@@ -7,12 +7,14 @@ import { AuthGuard } from '../auth/auth.guard';
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
+    // todo ozan need this route?
     @UseGuards(AuthGuard)
     @Get()
     getAllUsers() {
         return this.usersService.getAllUsers();
     }
 
+    // todo ozan should a guard put here?
     @Post()
     async createUser(@Body() createUserDto: CreateUserDto) {
         await this.usersService.createUser(createUserDto);

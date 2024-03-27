@@ -15,7 +15,8 @@ import { User } from '../users/user.entity';
 
 @Table({
     tableName: 'Messages',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 })
 export class Message extends Model {
     @PrimaryKey
@@ -39,6 +40,10 @@ export class Message extends Model {
     @Default(() => dateHelper.nowDateWithToDate())
     @Column(DataType.DATE)
     createdAt: Date;
+
+    @Default(() => dateHelper.nowDateWithToDate())
+    @Column(DataType.DATE)
+    updatedAt: Date;
 
     @BelongsTo(() => User, {
         targetKey: 'userNumber'

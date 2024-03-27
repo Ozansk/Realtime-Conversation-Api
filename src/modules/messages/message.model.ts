@@ -4,4 +4,5 @@ export interface Message {
     conversationNumber: string;
     text: string;
     createdAt?: Date;
+    updatedAt?: Date;
 }

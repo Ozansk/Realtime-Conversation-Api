@@ -58,11 +58,27 @@ describe('Messages Controller Testing', () => {
 
     describe('Get Messages By Conversation Number', () => {
         it('should return 200 get Messages by conversation number', async () => {
-            await request(app.getHttpServer())
+            const { body } = await request(app.getHttpServer())
                 .get('/messages')
                 .set('Authorization', validToken)
                 .query(getMessagesByConversationNumberData)
                 .expect(HttpStatus.OK);
+
+            expect(typeof body).toBe('object');
+            body.forEach((message) => {
+                expect(message).toHaveProperty('id');
+                expect(typeof message.id).toBe('number');
+                expect(message).toHaveProperty('userNumber');
+                expect(typeof message.userNumber).toBe('string');
+                expect(message).toHaveProperty('conversationNumber');
+                expect(typeof message.conversationNumber).toBe('string');
+                expect(message).toHaveProperty('text');
+                expect(typeof message.text).toBe('string');
+                expect(message).toHaveProperty('createdAt');
+                expect(typeof message.createdAt).toBe('string');
+                expect(message).toHaveProperty('updatedAt');
+                expect(typeof message.updatedAt).toBe('string');
+            });
         });
     });
 });

@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { UsersRepository } from '../users/users.repository';
+import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto';
 import { JwtService } from '@nestjs/jwt';
 import baseConfig from '../../baseConfig';
@@ -14,7 +14,7 @@ interface UserPayload {
 @Injectable()
 export class AuthService {
     constructor(
-        private usersRepository: UsersRepository,
+        private usersService: UsersService,
         private jwtService: JwtService,
         @Inject(CACHE_MANAGER)
         private cacheManager: Cache
@@ -29,7 +29,7 @@ export class AuthService {
     };
 
     checkUserWithPassword = async (userName: string, password: string) => {
-        const user = await this.usersRepository.findUserByUserName(userName);
+        const user = await this.usersService.findUserByUserName(userName);
         if (!user) {
             throw new Error('Username or password is wrong.');
         }
@@ -77,7 +77,7 @@ export class AuthService {
         if (userData) {
             return userData;
         }
-        const userInfo = await this.usersRepository.findUserByUserNumber(userNumber);
+        const userInfo = await this.usersService.findUserByUserNumber(userNumber);
         if (!userInfo) {
             throw new Error('User info not found!');
         }

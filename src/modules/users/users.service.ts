@@ -19,4 +19,8 @@ export class UsersService {
             ...userData
         });
     };
+
+    findUserByUserName = async (userName: string) => this.usersRepository.findUserByUserName(userName);
+
+    findUserByUserNumber = async (userNumber: string) => this.usersRepository.findUserByUserNumber(userNumber);
 }

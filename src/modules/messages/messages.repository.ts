@@ -17,4 +17,24 @@ export class MessagesRepository {
             },
             order: [['createdAt', 'DESC']]
         });
+
+    findMessageById = async (id: number) =>
+        this.messagesEntity.findOne({
+            where: {
+                id
+            }
+        });
+
+    editMessageById = async (id: number, text: string) =>
+        this.messagesEntity.update(
+            {
+                text
+            },
+            {
+                where: {
+                    id
+                },
+                returning: true
+            }
+        );
 }

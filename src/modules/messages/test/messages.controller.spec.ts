@@ -8,6 +8,8 @@ import { MessagesModule } from '../messages.module';
 import { AuthModule } from '../../auth/auth.module';
 import { AuthService } from '../../auth/auth.service';
 import { CreateMessageDto, GetMessagesByConversationNumberDto } from '../dto';
+import { MongooseModule } from '@nestjs/mongoose';
+import mongodbConfig from '@config/mongodb.config.json';
 
 let validToken: string;
 
@@ -30,7 +32,8 @@ describe('Messages Controller Testing', () => {
                 MessagesModule,
                 SequelizeModule.forRoot(
                     new Postgres().setConfig(postgreTestConfig).setSequelizeModel().getSequelizeModel()
-                )
+                ),
+                MongooseModule.forRoot(mongodbConfig.HOSTNAME + mongodbConfig.DATABASE)
             ]
         }).compile();
 

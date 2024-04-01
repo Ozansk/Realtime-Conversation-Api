@@ -1,6 +1,6 @@
-import { Body, Controller, Post, UseGuards, Req, Query, Get } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Req, Query, Get, Param, Put } from '@nestjs/common';
 import { MessagesService } from './messages.service';
-import { CreateMessageDto, GetMessagesByConversationNumberDto } from './dto';
+import { CreateMessageDto, GetMessagesByConversationNumberDto, EditMessageParamDto, EditMessageBodyDto } from './dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { Request } from 'express';
 
@@ -19,5 +19,18 @@ export class MessagesController {
         @Query() getMessagesByConversationNumberDto: GetMessagesByConversationNumberDto
     ) {
         return this.messagesService.getMessagesByConversationNumber(getMessagesByConversationNumberDto);
+    }
+
+    @Put('edit/:id')
+    async editMessageById(
+        @Param() editMessageParamDto: EditMessageParamDto,
+        @Body() editMessageBodyDto: EditMessageBodyDto,
+        @Req() req: Request
+    ) {
+        return this.messagesService.editMessageById({
+            id: editMessageParamDto.id,
+            text: editMessageBodyDto.text,
+            userNumber: req?.user?.userNumber
+        });
     }
 }

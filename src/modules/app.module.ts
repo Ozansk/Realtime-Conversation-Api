@@ -7,6 +7,8 @@ import Postgres from '../db/postgre';
 import { GatewayModule } from './gateway/gateway.module';
 import { MessagesModule } from './messages/messages.module';
 import { ConversationModule } from './conversation/conversation.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import mongodbConfig from '@config/mongodb.config.json';
 
 @Module({
     imports: [
@@ -14,8 +16,9 @@ import { ConversationModule } from './conversation/conversation.module';
         AuthModule,
         GatewayModule,
         MessagesModule,
+        ConversationModule,
         SequelizeModule.forRoot(new Postgres().setConfig(postgreConfig).setSequelizeModel().getSequelizeModel()),
-        ConversationModule
+        MongooseModule.forRoot(mongodbConfig.HOSTNAME + mongodbConfig.DATABASE)
     ]
 })
 export class AppModule {}

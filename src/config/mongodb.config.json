@@ -1,0 +1,7 @@
+{
+    "HOSTNAME": "mongodb://localhost:27017/",
+    "PORT": 27017,
+    "USERNAME": "",
+    "PASSWORD": "",
+    "DATABASE": "realtime-conversation"
+}

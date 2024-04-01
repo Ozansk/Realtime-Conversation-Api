@@ -6,9 +6,16 @@ import { AuthModule } from '../auth/auth.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Message } from './message.entity';
 import { GatewayModule } from '../gateway/gateway.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { EditedMessageHistorySchema } from '../../db/mongo/schemas';
 
 @Module({
-    imports: [AuthModule, GatewayModule, SequelizeModule.forFeature([Message])],
+    imports: [
+        AuthModule,
+        GatewayModule,
+        SequelizeModule.forFeature([Message]),
+        MongooseModule.forFeature([{ name: 'EditedMessageHistory', schema: EditedMessageHistorySchema }])
+    ],
     controllers: [MessagesController],
     providers: [MessagesService, MessagesRepository]
 })

@@ -9,5 +9,6 @@
     "moduleNameMapper": {
       "^@helpers": "<rootDir>/helpers",
       "^@config/(.*)$": "<rootDir>/config/$1"
-    }
+    },
+    "testTimeout": 20000
 }

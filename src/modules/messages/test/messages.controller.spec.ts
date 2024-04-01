@@ -45,7 +45,7 @@ describe('Messages Controller Testing', () => {
             userNumber: 'USR-AT41YB6R4Z3D'
         });
         validToken = 'Bearer ' + mainUserTokenData.token;
-    }, 30000);
+    });
 
     describe('Create Message', () => {
         it('should return 201 create message', async () => {

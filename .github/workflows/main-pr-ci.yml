@@ -17,6 +17,10 @@ jobs:
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
+      mongodb:
+        image: mongo
+        ports:
+          - 27017:27017
 
     strategy:
       matrix:
@@ -50,6 +54,13 @@ jobs:
         run: psql -h 127.0.0.1 --port 5432 -U postgres realtime-conversation-api-test --command "CREATE EXTENSION postgis"
         env:
           PGPASSWORD: postgres
+
+      - name: Install MongoDB client
+        run: sudo apt-get install mongodb-clients
+
+      - name: Create a database and collection
+        run: |
+          mongo localhost:27017/realtime-conversation --eval "db.createCollection('dummy')"
 
       - run: npx ts-node src/db/test/init_test_db.ts;
       - run: npx sequelize-cli db:seed:all;

@@ -26,6 +26,7 @@ jobs:
       matrix:
         node-version: [ 20.x ]
         redis-version: [ 6 ]
+        mongo-version: [ 4.2 ]
 
     steps:
       - name: Checkout
@@ -46,6 +47,12 @@ jobs:
         with:
           redis-version: ${{ matrix.redis-version }}
 
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.10.0
+        with:
+          mongodb-version: ${{ matrix.mongo-version }}
+          mongodb-db: realtime-conversation
+
       - run: npm i
 
       - run: npx sequelize-cli db:create;
@@ -54,13 +61,6 @@ jobs:
         run: psql -h 127.0.0.1 --port 5432 -U postgres realtime-conversation-api-test --command "CREATE EXTENSION postgis"
         env:
           PGPASSWORD: postgres
-
-      - name: Install MongoDB client
-        run: sudo apt-get install mongodb-clients
-
-      - name: Create a database and collection
-        run: |
-          mongo localhost:27017/realtime-conversation --eval "db.createCollection('dummy')"
 
       - run: npx ts-node src/db/test/init_test_db.ts;
       - run: npx sequelize-cli db:seed:all;

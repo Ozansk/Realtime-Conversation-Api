@@ -17,10 +17,6 @@ jobs:
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
-      mongodb:
-        image: mongo
-        ports:
-          - 27017:27017
 
     strategy:
       matrix:
@@ -51,7 +47,6 @@ jobs:
         uses: supercharge/mongodb-github-action@1.10.0
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
-          mongodb-port: 42069
           mongodb-db: realtime-conversation
 
       - run: npm i
